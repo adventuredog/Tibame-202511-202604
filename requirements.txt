@@ -1,3 +1,8 @@
 streamlit
 requests
 sqlalchemy
+yfinance
+pandas
+sqlalchemy
+pymysql
+cryptography
