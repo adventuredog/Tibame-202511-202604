@@ -17,8 +17,6 @@ on:
 jobs:
   run_monitor:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,3 +37,11 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}     # 您的 Gmail 帳號
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}     # 您的應用程式密碼
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }} # 收件人
+      
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add local_data.db
+          git commit -m "Update economic data" || exit 0
+          git push origin main
