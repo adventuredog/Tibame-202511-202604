@@ -14,6 +14,8 @@ def send_email(subject, content):
 
     if not all([sender, password, receiver]):
         print("郵件環境變數未設定，跳過寄信。")
+        print(f"DEBUG: 帳號長度 = {len(sender) if sender else 0}")
+        print(f"DEBUG: 密碼長度 = {len(os.getenv('EMAIL_PASS')) if os.getenv('EMAIL_PASS') else 0}")
         return
 
     msg = MIMEText(content)
