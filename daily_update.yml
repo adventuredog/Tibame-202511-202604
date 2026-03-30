@@ -33,9 +33,9 @@ jobs:
       - name: Execute Script
         run: python crawler_and_calc.py ${{ github.event.inputs.tw_cpi }} ${{ github.event.inputs.us_cpi }}
         env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}     # 您的 Gmail 帳號
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}     # 您的應用程式密碼
-          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }} # 收件人
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
           DB_URL: ${{ secrets.DB_URL }}
       
       - name: Commit and Push changes
