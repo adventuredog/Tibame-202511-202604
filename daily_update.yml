@@ -2,21 +2,24 @@ name: Monthly Economic Update & Alert
 
 on:
   schedule:
-    - cron: '0 0 15 * *'  # 每月 15 號凌晨執行
-  workflow_dispatch:      # 允許手動點擊執行並輸入參數
+    - cron: '0 0 15 * *'
+  workflow_dispatch:
     inputs:
       tw_cpi:
-        description: '台灣 CPI 月變動率 (%)'
+        description: 'Taiwan CPI (%)'
         required: true
         default: '0.0'
       us_cpi:
-        description: '美國 CPI 月變動率 (%)'
+        description: 'US CPI (%)'
         required: true
         default: '0.0'
 
 jobs:
   run_monitor:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,21 +30,21 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: |
-          pip install yfinance pandas sqlalchemy pymysql
+        run: pip install yfinance pandas sqlalchemy pymysql
 
       - name: Execute Script
-        run: python crawler_and_calc.py ${{ github.event.inputs.tw_cpi }} ${{ github.event.inputs.us_cpi }}
         env:
+          DB_URL: ${{ secrets.DB_URL }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
-          DB_URL: ${{ secrets.DB_URL }}
-      
-      - name: Commit and Push changes
+        run: |
+          python crawler_and_calc.py ${{ github.event.inputs.tw_cpi }} ${{ github.event.inputs.us_cpi }}
+
+      - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add local_data.db
-          git commit -m "Update economic data" || exit 0
+          git add local_data.db || echo "No DB file to add"
+          git commit -m "Update DB" || exit 0
           git push origin main
