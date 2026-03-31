@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
-      EMAIL_PASS: ${{ secrets.GMAIL_APP_KEY }}
+      EMAIL_PASS: "1234567890123456"
       RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
       DB_URL: ${{ secrets.DB_URL }}
       TEST_DATA: ${{ secrets.TEST_VAR }}
