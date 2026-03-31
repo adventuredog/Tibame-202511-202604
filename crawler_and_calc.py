@@ -10,6 +10,7 @@ def send_email(subject, content):
     sender = os.environ.get("EMAIL_USER")
     password = os.environ.get("EMAIL_PASS")
     receiver = os.environ.get("RECEIVER_EMAIL")
+    len(os.getenv("TEST_DATA"))
 
     # 極簡除錯判斷
     if not sender or not password or not receiver:
