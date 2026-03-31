@@ -1,24 +1,25 @@
 name: Monthly Economic Update & Alert
 
 on:
-  schedule:
-    - cron: '0 0 15 * *'
   workflow_dispatch:
     inputs:
       tw_cpi:
-        description: 'Taiwan CPI (%)'
-        required: true
+        description: 'TW CPI'
         default: '0.0'
       us_cpi:
-        description: 'US CPI (%)'
-        required: true
+        description: 'US CPI'
         default: '0.0'
 
 jobs:
   run_monitor:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    # --- 將 env 放在這裡，確保全域生效 ---
+    env:
+      EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+      RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+      DB_URL: ${{ secrets.DB_URL }}
+    # ----------------------------------
     
     steps:
       - name: Checkout code
@@ -33,18 +34,4 @@ jobs:
         run: pip install yfinance pandas sqlalchemy pymysql
 
       - name: Execute Script
-        env:
-          DB_URL: ${{ secrets.DB_URL }}
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
-        run: |
-          python crawler_and_calc.py ${{ github.event.inputs.tw_cpi }} ${{ github.event.inputs.us_cpi }}
-
-      - name: Commit and Push
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add local_data.db || echo "No DB file to add"
-          git commit -m "Update DB" || exit 0
-          git push origin main
+        run: python crawler_and_calc.py ${{ github.event.inputs.tw_cpi }} ${{ github.event.inputs.us_cpi }}
