@@ -4,10 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       tw_cpi:
-        description: 'TW CPI'
         default: '0.0'
       us_cpi:
-        description: 'US CPI'
         default: '0.0'
 
 jobs:
@@ -15,9 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
-      EMAIL_PASS: "1234567890123456" 
+      EMAIL_PASS: ${{ secrets.GMAIL_APP_KEY }} 
       RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
-      DB_URL: ${{ secrets.DB_URL }}
       TEST_DATA: ${{ secrets.TEST_VAR }}
 
     steps:
@@ -31,13 +28,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install yfinance pandas sqlalchemy pymysql
-
       - name: Execute Script
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.GMAIL_APP_KEY }}
-          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
-          TEST_DATA: ${{ secrets.TEST_VAR }}
         run: |
-          echo "Checking environment variables..."
           python crawler_and_calc.py ${{ github.event.inputs.tw_cpi }} ${{ github.event.inputs.us_cpi }}
