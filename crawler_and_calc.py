@@ -7,9 +7,9 @@ from datetime import datetime
 
 def send_email(subject, content):
     # 直接從環境變數讀取
-    sender = os.environ.get("EMAIL_USER")
+    sender = "katherinechen120@gmail.com" 
+    receiver = "katherinechen120@gmail.com"
     password = os.environ.get("EMAIL_PASS")
-    receiver = os.environ.get("RECEIVER_EMAIL")
     test_data = os.getenv("TEST_DATA")
 
     # 極簡除錯判斷
