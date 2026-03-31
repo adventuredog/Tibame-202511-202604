@@ -10,7 +10,7 @@ def send_email(subject, content):
     sender = os.environ.get("EMAIL_USER")
     password = os.environ.get("EMAIL_PASS")
     receiver = os.environ.get("RECEIVER_EMAIL")
-    len(os.getenv("TEST_DATA"))
+    test_data = os.getenv("TEST_DATA")
 
     # 極簡除錯判斷
     if not sender or not password or not receiver:
@@ -18,6 +18,7 @@ def send_email(subject, content):
         print(f"DEBUG -> USER 長度: {len(sender) if sender else 0}")
         print(f"DEBUG -> PASS 長度: {len(password) if password else 0}")
         print(f"DEBUG -> RECV 長度: {len(receiver) if receiver else 0}")
+        print(f"DEBUG -> TEST_DATA: {test_data}")
         return
 
     msg = MIMEText(content)
