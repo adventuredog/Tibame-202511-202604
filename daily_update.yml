@@ -13,14 +13,12 @@ on:
 jobs:
   run_monitor:
     runs-on: ubuntu-latest
-    # --- 將 env 放在這裡，確保全域生效 ---
     env:
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
       DB_URL: ${{ secrets.DB_URL }}
-    # ----------------------------------
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
