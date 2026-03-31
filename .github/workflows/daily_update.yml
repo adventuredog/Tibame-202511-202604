@@ -35,7 +35,7 @@ jobs:
       - name: Execute Script
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_PASS: ${{ secrets.GMAIL_APP_KEY }}
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
           TEST_DATA: ${{ secrets.TEST_VAR }}
         run: |
