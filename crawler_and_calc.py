@@ -15,6 +15,7 @@ def send_email(subject, content):
     # 極簡除錯判斷
     if not sender or not password or not receiver:
         print("⚠️ 錯誤：郵件環境變數缺失")
+        print(f"DEBUG -> USER 存在狀態: {sender is not None}")
         print(f"DEBUG -> USER 長度: {len(sender) if sender else 0}")
         print(f"DEBUG -> PASS 長度: {len(password) if password else 0}")
         print(f"DEBUG -> RECV 長度: {len(receiver) if receiver else 0}")
