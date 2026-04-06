@@ -12,10 +12,9 @@ jobs:
   run_monitor:
     runs-on: ubuntu-latest
     env:
-      EMAIL_USER: ${{ secrets.EMAIL_USER }}
-      EMAIL_PASS: ${{ secrets.AAA }}
-      RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
-      TEST_DATA: ${{ secrets.TEST_VAR }}
+      EMAIL_USER: "katherinechen120@gmail.com"
+      EMAIL_PASS: "TEST_12345"
+      RECEIVER_EMAIL: "katherinechen120@gmail.com"
 
     steps:
       - name: Checkout code
