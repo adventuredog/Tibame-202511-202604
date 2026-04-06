@@ -31,3 +31,8 @@ jobs:
       - name: Execute Script
         run: |
           python crawler_and_calc.py ${{ github.event.inputs.tw_cpi }} ${{ github.event.inputs.us_cpi }}
+      - name: Debug Environment Variable
+        run: |
+          # ${#變數名} 會印出該變數的字元長度
+          echo "The length of EMAIL_USER is: ${#EMAIL_USER}"
+          echo "The length of EMAIL_PASS is: ${#EMAIL_PASS}"
